@@ -17,7 +17,7 @@ interface CardInterface {
 }
 
 function Project() {
-  const [data, setData] = useState<CardInterface>();
+  const [data, setData] = useState<CardInterface[] | null>(null);
   const [selected, setSelected] = useState<string>("none");
 
   async function getData() {
@@ -25,16 +25,18 @@ function Project() {
 
     const allProducts = response.data;
 
-    const filteredProductsRating = allProducts.filter((item) => {
+    const filteredProductsRating = allProducts.filter((item: CardInterface) => {
       return item.rating.average > 4.5;
     });
 
-    const sortProductsPrice = filteredProductsRating.sort((a, b) => {
-      const priceA = parseFloat(a.price.replace("$", ""));
-      const priceB = parseFloat(b.price.replace("$", ""));
+    const sortProductsPrice = filteredProductsRating.sort(
+      (a: CardInterface, b: CardInterface) => {
+        const priceA = parseFloat(a.price.replace("$", ""));
+        const priceB = parseFloat(b.price.replace("$", ""));
 
-      return priceA - priceB;
-    });
+        return priceA - priceB;
+      }
+    );
 
     console.log(sortProductsPrice);
     setData(sortProductsPrice);
@@ -49,7 +51,7 @@ function Project() {
       <div className="text-2xl text-bold w-full mb-4 text-center sticky top-0 bg-white border-b-2 border-black">
         Selected: {selected}
       </div>
-      {data?.map((item, idx) => {
+      {data?.map((item) => {
         return (
           <div
             key={item.id}

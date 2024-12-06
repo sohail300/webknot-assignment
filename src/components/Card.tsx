@@ -6,7 +6,7 @@ function Card({
   setSelected,
 }: {
   name: string;
-  price: number;
+  price: string;
   rating: { reviews: number; average: number };
   image: string;
   setSelected: (name: string) => void;
